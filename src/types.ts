@@ -8,4 +8,6 @@ export interface ScrapeResult {
 export interface ScraperOptions {
   timeout?: number;
   headers?: Record<string, string>;
+  respectRobotsTxt?: boolean;
+  userAgent?: string;
 }

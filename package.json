@@ -22,7 +22,8 @@
   "homepage": "https://github.com/josednl/basic-scraper#readme",
   "dependencies": {
     "axios": "^1.15.2",
-    "cheerio": "^1.2.0"
+    "cheerio": "^1.2.0",
+    "robots-parser": "^3.0.1"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.35",

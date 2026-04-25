@@ -41,4 +41,20 @@ describe('SimpleScraper', () => {
     expect(result.title).toBe('No Links');
     expect(result.data.links).toHaveLength(0);
   });
+
+  it('should throw error if scraping is disallowed by robots.txt', async () => {
+    const scraper = new SimpleScraper({ respectRobotsTxt: true });
+    
+    // Mock robots.txt that disallows everything
+    const mockRobotsTxt = `
+      User-agent: *
+      Disallow: /
+    `;
+
+    vi.spyOn((scraper as any).httpClient, 'fetchHtml').mockResolvedValue(mockRobotsTxt);
+
+    await expect(scraper.scrape('https://fake-url.com/some-page')).rejects.toThrow(
+      'Scraping disallowed by robots.txt'
+    );
+  });
 });
