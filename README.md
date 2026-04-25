@@ -24,11 +24,13 @@ npm install
 
 ## Usage
 
-To run the example scraper (which targets `example.com` by default):
+To run the scraper against any URL:
 
 ```bash
-npm start
+npm start -- https://example.com
 ```
+
+> **Note**: The `--` is necessary to pass arguments through npm to the underlying script.
 
 ### Creating your own scraper
 
