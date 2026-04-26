@@ -2,9 +2,15 @@ import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 import type { ScraperOptions } from './types.js';
 
+/**
+ * Handles HTTP requests using axios.
+ */
 export class HttpClient {
   private client: AxiosInstance;
 
+  /**
+   * @param options - Configuration options for the client.
+   */
   constructor(options?: ScraperOptions) {
     this.client = axios.create({
       timeout: options?.timeout || 10000,
@@ -15,6 +21,12 @@ export class HttpClient {
     });
   }
 
+  /**
+   * Fetches the HTML content of a given URL.
+   * @param url - The URL to fetch.
+   * @returns The HTML content as a string.
+   * @throws Error if the request fails.
+   */
   async fetchHtml(url: string): Promise<string> {
     try {
       const response = await this.client.get(url);

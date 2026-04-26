@@ -1,5 +1,11 @@
+/**
+ * Main entry point for the basic scraper CLI.
+ */
 import { SimpleScraper } from './simple-scraper.js';
 
+/**
+ * Entry point function that parses arguments and executes the scraper.
+ */
 async function main() {
   const urlArg = process.argv[2];
 
