@@ -6,6 +6,9 @@ A modular and extensible web scraper built with TypeScript, Axios, and Cheerio. 
 
 - **TypeScript Native**: Full type safety and modern ESM support.
 - **Modular Architecture**: Base classes to easily create specialized scrapers.
+- **JavaScript Rendering**: Powered by [Playwright](https://playwright.dev/) for scraping SPAs and dynamic content.
+- **UA Rotation**: Automatic rotation of real browser User-Agent strings to avoid detection.
+- **Robots.txt Respect**: Built-in support for checking crawling permissions.
 - **Modern Tooling**: Powered by `tsx` for execution and `vitest` for testing.
 - **Pre-configured**: Includes linting/type-checking and testing workflows.
 
@@ -30,7 +33,17 @@ To run the scraper against any URL:
 npm start -- https://example.com
 ```
 
-> **Note**: The `--` is necessary to pass arguments through npm to the underlying script.
+### Configuration
+
+You can configure the scraper by passing options to the constructor:
+
+```typescript
+const scraper = new SimpleScraper({
+  timeout: 10000,
+  respectRobotsTxt: true,
+  renderJs: true, // Use Playwright for dynamic content
+});
+```
 
 ### Creating your own scraper
 
@@ -62,10 +75,12 @@ export class MyScraper extends BaseScraper {
 
 - `src/`: Source code.
   - `base-scraper.ts`: Abstract base class for all scrapers.
-  - `http-client.ts`: Axios wrapper for HTML fetching.
+  - `browser-service.ts`: Playwright integration for JS rendering.
+  - `http-client.ts`: Axios wrapper for static HTML fetching.
+  - `robots-service.ts`: Robots.txt parsing and validation.
+  - `user-agent-service.ts`: User-Agent rotation management.
   - `simple-scraper.ts`: Example implementation.
 - `tests/`: Unit tests.
-- `dist/`: Compiled JavaScript output (generated after build).
 
 ## License
 
