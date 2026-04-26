@@ -23,12 +23,25 @@ This document serves as the foundational mandate for Gemini CLI when working on 
 - **Language**: Source code and documentation in English. CLI messages in English. Comments in English.
 
 ## Key Workflows
+- **PowerShell Commands**: Run commands sequentially. Do not use `&&` as it is not supported in all PowerShell versions. To simulate `&&`, use the pattern `command1; if ($?) { command2 }`.
 - **Pre-commit**: Always run `npm run precommit` before any commit. This ensures:
   1. No TypeScript errors (`tsc --noEmit`).
   2. All tests pass (`vitest --run`).
 - **CLI**: The entry point `src/index.ts` accepts a URL as the first argument.
 
+## Skills & Principles
+- **Node.js Best Practices**: Follow modular architecture and async patterns.
+- **Web Scraping Methodology**: Implement multiple extraction strategies and anti-bot handling.
+- **Advanced Types**: Leverage TypeScript for robust data structures and API responses.
+
+## Roadmap
+- [ ] **UA Rotation**: Implement a dynamic `UserAgentProvider` to cycle through real browser strings.
+- [ ] **JS Rendering**: Integrate `Playwright` to handle SPA and dynamic content.
+- [ ] **Schema Validation**: Use `Zod` to validate scraped data and ensure structural integrity.
+
 ## Evolution Notes
 - [2026-04-25]: Migrated from `ts-node` to `tsx` due to ESM loader deprecation warnings and performance.
 - [2026-04-25]: Project transitioned to pure ESM (`type: module`).
 - [2026-04-25]: Added `robots-parser` and logic to respect `robots.txt` rules.
+- [2026-04-26]: Added JSDoc documentation to all main components.
+- [2026-04-26]: Integrated specialized skills for Node.js, TypeScript, and Web Scraping.
