@@ -33,6 +33,12 @@ To run the scraper against any URL:
 npm start -- https://example.com
 ```
 
+To enable JavaScript rendering:
+
+```bash
+npm start -- https://example.com --render-js
+```
+
 ### Configuration
 
 You can configure the scraper by passing options to the constructor:

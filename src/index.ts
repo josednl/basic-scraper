@@ -7,16 +7,19 @@ import { SimpleScraper } from './simple-scraper.js';
  * Entry point function that parses arguments and executes the scraper.
  */
 async function main() {
-  const urlArg = process.argv[2];
+  const args = process.argv.slice(2);
+  const urlArg = args.find(arg => arg.startsWith('http'));
+  const renderJs = args.includes('--render-js');
 
   if (!urlArg) {
-    console.error('Usage: npm start -- <url>');
+    console.error('Usage: npm start -- <url> [--render-js]');
     process.exit(1);
   }
 
   const scraper = new SimpleScraper({
-    timeout: 10000,
+    timeout: 15000,
     respectRobotsTxt: true,
+    renderJs,
   });
 
   try {

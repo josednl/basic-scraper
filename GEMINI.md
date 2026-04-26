@@ -28,7 +28,7 @@ This document serves as the foundational mandate for Gemini CLI when working on 
   1. No TypeScript errors (`tsc --noEmit`).
   2. All tests pass (`vitest --run`).
 - **Documentation**: Always update `GEMINI.md` (roadmap, evolution notes, or rules) and `README.md` after significant changes or when new patterns are established. This doesn't need to be explicitly mentioned in commit messages.
-- **CLI**: The entry point `src/index.ts` accepts a URL as the first argument.
+- **CLI**: The entry point `src/index.ts` accepts a URL and an optional `--render-js` flag.
 
 ## Skills & Principles
 - **Node.js Best Practices**: Follow modular architecture and async patterns.
