@@ -24,12 +24,13 @@ export class HttpClient {
   /**
    * Fetches the HTML content of a given URL.
    * @param url - The URL to fetch.
+   * @param headers - Optional headers to override defaults.
    * @returns The HTML content as a string.
    * @throws Error if the request fails.
    */
-  async fetchHtml(url: string): Promise<string> {
+  async fetchHtml(url: string, headers?: Record<string, string>): Promise<string> {
     try {
-      const response = await this.client.get(url);
+      const response = await this.client.get(url, { headers: headers || {} });
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
