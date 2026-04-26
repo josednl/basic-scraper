@@ -24,4 +24,6 @@ export interface ScraperOptions {
   respectRobotsTxt?: boolean;
   /** User-Agent string to use for requests. */
   userAgent?: string;
+  /** Whether to render JavaScript using a headless browser. */
+  renderJs?: boolean;
 }

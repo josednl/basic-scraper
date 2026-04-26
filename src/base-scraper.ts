@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio';
 import { HttpClient } from './http-client.js';
 import { RobotsService } from './robots-service.js';
 import { UserAgentService } from './user-agent-service.js';
+import { BrowserService } from './browser-service.js';
 import type { ScrapeResult, ScraperOptions } from './types.js';
 
 /**
@@ -12,6 +13,7 @@ export abstract class BaseScraper {
   protected httpClient: HttpClient;
   protected robotsService: RobotsService;
   protected userAgentService: UserAgentService;
+  protected browserService: BrowserService;
   protected options: ScraperOptions;
 
   /**
@@ -22,6 +24,7 @@ export abstract class BaseScraper {
     this.httpClient = new HttpClient(this.options);
     this.robotsService = new RobotsService(this.httpClient);
     this.userAgentService = new UserAgentService();
+    this.browserService = new BrowserService();
   }
 
   /**
@@ -42,7 +45,16 @@ export abstract class BaseScraper {
       }
     }
 
-    const html = await this.httpClient.fetchHtml(url, { 'User-Agent': userAgent });
+    let html: string;
+    if (this.options.renderJs) {
+      html = await this.browserService.fetchRenderedHtml(url, {
+        ...this.options,
+        userAgent
+      });
+    } else {
+      html = await this.httpClient.fetchHtml(url, { 'User-Agent': userAgent });
+    }
+
     const $ = cheerio.load(html);
     
     return {
@@ -51,6 +63,13 @@ export abstract class BaseScraper {
       data: this.extractData($),
       timestamp: new Date().toISOString(),
     };
+  }
+
+  /**
+   * Closes any open resources (like the browser).
+   */
+  async close(): Promise<void> {
+    await this.browserService.close();
   }
 
   /**

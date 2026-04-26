@@ -37,7 +37,7 @@ This document serves as the foundational mandate for Gemini CLI when working on 
 
 ## Roadmap
 - [x] **UA Rotation**: Implement a dynamic `UserAgentProvider` to cycle through real browser strings.
-- [ ] **JS Rendering**: Integrate `Playwright` to handle SPA and dynamic content.
+- [x] **JS Rendering**: Integrate `Playwright` to handle SPA and dynamic content.
 - [ ] **Schema Validation**: Use `Zod` to validate scraped data and ensure structural integrity.
 
 ## Evolution Notes
@@ -47,3 +47,4 @@ This document serves as the foundational mandate for Gemini CLI when working on 
 - [2026-04-26]: Added JSDoc documentation to all main components.
 - [2026-04-26]: Integrated specialized skills for Node.js, TypeScript, and Web Scraping.
 - [2026-04-26]: Implemented User-Agent rotation service and integrated it into the base scraper.
+- [2026-04-26]: Integrated Playwright for JavaScript rendering and added BrowserService.

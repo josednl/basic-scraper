@@ -38,6 +38,8 @@ async function main() {
   } catch (error) {
     console.error('Error during scraping:', error instanceof Error ? error.message : error);
     process.exit(1);
+  } finally {
+    await scraper.close();
   }
 }
 
