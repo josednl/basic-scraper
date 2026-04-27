@@ -1,13 +1,15 @@
+import type { z } from 'zod';
+
 /**
  * Represents the result of a scraping operation.
  */
-export interface ScrapeResult {
+export interface ScrapeResult<T = any> {
   /** The title of the page. */
   title: string;
   /** The URL of the scraped page. */
   url: string;
   /** The extracted data from the page. */
-  data: any;
+  data: T;
   /** ISO timestamp of when the scraping occurred. */
   timestamp: string;
 }
@@ -15,7 +17,7 @@ export interface ScrapeResult {
 /**
  * Configuration options for the scraper.
  */
-export interface ScraperOptions {
+export interface ScraperOptions<T = any> {
   /** Request timeout in milliseconds. Defaults to 10000. */
   timeout?: number;
   /** Custom HTTP headers for requests. */
@@ -26,4 +28,6 @@ export interface ScraperOptions {
   userAgent?: string;
   /** Whether to render JavaScript using a headless browser. */
   renderJs?: boolean;
+  /** Zod schema to validate the extracted data. */
+  schema?: z.ZodSchema<T>;
 }

@@ -6,8 +6,9 @@ A modular and extensible web scraper built with TypeScript, Axios, and Cheerio. 
 
 - **TypeScript Native**: Full type safety and modern ESM support.
 - **Modular Architecture**: Base classes to easily create specialized scrapers.
-- **JavaScript Rendering**: Powered by [Playwright](https://playwright.dev/) for scraping SPAs and dynamic content.
-- **UA Rotation**: Automatic rotation of real browser User-Agent strings to avoid detection.
+- **JS Rendering**: Powered by [Playwright](https://playwright.dev/) for scraping SPAs and dynamic content.
+- **Schema Validation**: Integrated with [Zod](https://zod.dev/) to ensure data integrity and full type safety.
+- **UA Rotation**: Automatic rotation of real browser User-Agent strings.
 - **Robots.txt Respect**: Built-in support for checking crawling permissions.
 - **Modern Tooling**: Powered by `tsx` for execution and `vitest` for testing.
 - **Pre-configured**: Includes linting/type-checking and testing workflows.
@@ -44,10 +45,20 @@ npm start -- https://example.com --render-js
 You can configure the scraper by passing options to the constructor:
 
 ```typescript
+import { z } from 'zod';
+
+const schema = z.object({
+  links: z.array(z.object({
+    text: z.string(),
+    href: z.string()
+  }))
+});
+
 const scraper = new SimpleScraper({
   timeout: 10000,
   respectRobotsTxt: true,
-  renderJs: true, // Use Playwright for dynamic content
+  renderJs: true,
+  schema: schema // Data will be validated against this schema
 });
 ```
 

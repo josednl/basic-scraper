@@ -9,17 +9,17 @@ import type { ScrapeResult, ScraperOptions } from './types.js';
  * Base abstract class for all scrapers.
  * Provides common functionality for fetching HTML and respecting robots.txt.
  */
-export abstract class BaseScraper {
+export abstract class BaseScraper<T = any> {
   protected httpClient: HttpClient;
   protected robotsService: RobotsService;
   protected userAgentService: UserAgentService;
   protected browserService: BrowserService;
-  protected options: ScraperOptions;
+  protected options: ScraperOptions<T>;
 
   /**
    * @param options - Configuration options for the scraper.
    */
-  constructor(options?: ScraperOptions) {
+  constructor(options?: ScraperOptions<T>) {
     this.options = options || {};
     this.httpClient = new HttpClient(this.options);
     this.robotsService = new RobotsService(this.httpClient);
@@ -31,9 +31,9 @@ export abstract class BaseScraper {
    * Main method to scrape a URL.
    * @param url - The URL to scrape.
    * @returns A promise that resolves to the scrape result.
-   * @throws Error if robots.txt disallows scraping or if fetching fails.
+   * @throws Error if robots.txt disallows scraping, fetching fails, or validation fails.
    */
-  async scrape(url: string): Promise<ScrapeResult> {
+  async scrape(url: string): Promise<ScrapeResult<T>> {
     const userAgent = this.options.userAgent || 
                      this.options.headers?.['User-Agent'] || 
                      this.userAgentService.getRandom();
@@ -56,11 +56,22 @@ export abstract class BaseScraper {
     }
 
     const $ = cheerio.load(html);
+    const data = this.extractData($);
+
+    // Validate data if a schema is provided
+    let validatedData = data;
+    if (this.options.schema) {
+      const result = this.options.schema.safeParse(data);
+      if (!result.success) {
+        throw new Error(`Schema validation failed: ${JSON.stringify(result.error.format())}`);
+      }
+      validatedData = result.data;
+    }
     
     return {
       title: this.extractTitle($),
       url,
-      data: this.extractData($),
+      data: validatedData,
       timestamp: new Date().toISOString(),
     };
   }

@@ -4,7 +4,7 @@ import { BaseScraper } from './base-scraper.js';
 /**
  * A simple implementation of a scraper that extracts links and meta information.
  */
-export class SimpleScraper extends BaseScraper {
+export class SimpleScraper<T = any> extends BaseScraper<T> {
   /**
    * Extracts links and meta tags from the HTML.
    * @param $ - Cheerio instance of the loaded HTML.
